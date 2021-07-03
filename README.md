@@ -1,6 +1,6 @@
 # AVR0/1 EEprom use
 ----------
-#### This eeprom01.h header along with some linker scriupt changes allows easier use of eeprom in the avr0/1 series of mcu's.
+#### This eeprom01.h header along with some linker script changes allows easier use of eeprom in the avr0/1 series of mcu's.
 
 #### The linker script location is typically in the _avr/lib/ldscripts_ folder, so you can backup the original _avrxmega3.xn_ file if you wish before modification.
 
