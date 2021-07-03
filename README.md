@@ -1,4 +1,4 @@
-# AVR0/1 EEprom use
+# AVR0/1 EEprom
 ----------
 #### This eeprom01.h header along with some linker script changes allows easier use of eeprom in the avr0/1 series of mcu's.
 
