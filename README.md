@@ -1,3 +1,6 @@
+# AVR0/1 EEprom use
+----------
+#### This eeprom01.h header along with some linker scriupt changes allows easier use of eeprom in the avr0/1 series of mcu's.
 
 #### The linker script location is typically in the _avr/lib/ldscripts_ folder, so you can backup the original _avrxmega3.xn_ file if you wish before modification.
 
@@ -22,3 +25,32 @@
 #### The header file is named as to not conflict with the existing header.h file, so can put this header01.h file in the same location.
 
 #### The eeprom function is inline, and the EEWRITE macro attempts to be an all-in-one macro to make the single function work. The eememcpy function can also be used directly if wanted.
+
+
+#### Example-
+
+````
+#include <avr/io.h>
+#include <avr/eeprom01.h>
+
+EEMEM struct { PORT_t* port; uint8_t pinbm;  } eedata = { &PORTC, 1<<2 };
+EEUSER uint32_t bootcount;
+
+int main(){
+
+    EEWRITE( bootcount, bootcount+1 );
+    
+    eedata.port->DIRSET = eedata.pinbm;
+    eedata.port->OUTSET = eedata.pinbm;
+
+    EEWRITE( eedata.port, &PORTA );
+    EEWRITE( eedata.pinbm, 1<<5 );
+
+    eedata.port->DIRSET = eedata.pinbm;
+    eedata.port->OUTSET = eedata.pinbm;
+
+    while(1){}
+
+}
+
+````
