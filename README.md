@@ -22,9 +22,9 @@
 
 ````
 
-#### The header file is named as to not conflict with the existing header.h file, so can put this header01.h file in the same location.
+#### The header file is named as to not conflict with the existing header.h file, so you can put this header01.h file in the same location.
 
-#### The eeprom function is inline, and the EEWRITE macro attempts to be an all-in-one macro to make the single function work. The eememcpy function can also be used directly if wanted.
+#### The eeprom function is designed to handle all possibilities from a single byte on up, and the EEWRITE macro attempts to be an all-in-one macro to make the single function work. The eememcpy function can also be used directly if wanted.
 
 
 #### Example-
