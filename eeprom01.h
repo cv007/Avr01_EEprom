@@ -9,6 +9,9 @@ void eememcpy(uint16_t src, uint16_t eemem, uint8_t size){
     while( size-- ){
         *(volatile uint8_t*)0x1400; //ee read, blocks if busy
         *d++ = *s++;
+        //could also change the above line to prevent unnecessary writing 
+        //(no need to overwrite the existing value as its the same, which saves time)-
+        //if( *d == *s ){ d++; s++; continue; }
         _PROTECTED_WRITE_SPM( NVMCTRL.CTRLA, 3 );
     }
 }
