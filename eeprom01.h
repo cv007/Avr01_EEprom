@@ -26,7 +26,7 @@ void eememcpy2(uint16_t src, uint16_t eemem, uint8_t size){
     while( size-- ){
         *(volatile uint8_t*)0x1400; //ee read, blocks if busy
         *d++ = *s++;
-        if( n == 0 or not ((int)d bitand EEPROM_PAGE_SIZE-1) ) { //last byte, or page crossed
+        if( (not size) or not ((int)d bitand (EEPROM_PAGE_SIZE-1)) ) { //last byte, or page crossed
             _PROTECTED_WRITE_SPM( NVMCTRL.CTRLA, 3 );
             }
     }
@@ -49,7 +49,7 @@ void eememcpy3(uint16_t src, uint16_t eemem, uint8_t size){
         *(volatile uint8_t*)0x1400; //ee read, blocks if busy
         asm("cli");
         *d++ = *s++;
-        if( n == 0 or not ((int)d bitand EEPROM_PAGE_SIZE-1) ) { //last byte, or page crossed
+        if( (not size) or not ((int)d bitand (EEPROM_PAGE_SIZE-1)) )  { //last byte, or page crossed
             _PROTECTED_WRITE_SPM( NVMCTRL.CTRLA, 3 );
             SREG = sreg;
             }
