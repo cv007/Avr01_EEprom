@@ -59,6 +59,12 @@ void eememcpy3(uint16_t src, uint16_t eemem, uint8_t size){
 //using simple version
 #define EEWRITE(eemem,val) \
     { typeof(eemem) v__ = (typeof(eemem))val; eememcpy( (uint16_t)&v__, (uint16_t)&eemem, sizeof(eemem) ); }
+//version 2
+#define EEWRITE2(eemem,val) \
+    { typeof(eemem) v__ = (typeof(eemem))val; eememcpy2( (uint16_t)&v__, (uint16_t)&eemem, sizeof(eemem) ); }
+//version 3
+#define EEWRITE3(eemem,val) \
+    { typeof(eemem) v__ = (typeof(eemem))val; eememcpy3( (uint16_t)&v__, (uint16_t)&eemem, sizeof(eemem) ); }
 
 #define EEMEM  __attribute__(( section(".eeprom") ))
 #define EEUSER __attribute__(( section(".userrow") ))
