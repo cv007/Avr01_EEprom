@@ -54,3 +54,4 @@ int main(){
 }
 
 ````
+#### There are also a couple other versions in the header, with comments why they were created. Also, instead of the header only file, one could put the code in a source file where it would be a called function instead of inlined. If you use C++, the function could stay in a header and be marked as both inline so only one copy is generated and noinline so it is a called function.
