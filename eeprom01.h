@@ -8,7 +8,7 @@ void eememcpy(void* src, void* eemem, uint8_t size){
     volatile uint8_t* d = (volatile uint8_t*)eemem;
     while( size-- ){
         *(volatile uint8_t*)0x1400; //ee read, blocks if busy
-        //if( *d == *s ){ d++; s++; continue; } //skip write of not needed  (uncomment if wanted)      
+        //if( *d == *s ){ d++; s++; continue; } //skip write if not needed  (uncomment if wanted)      
         *d++ = *s++;
         _PROTECTED_WRITE_SPM( NVMCTRL.CTRLA, 3 );
     }
@@ -24,7 +24,7 @@ void eememcpy2(void* src, void* eemem, uint8_t size){
     while( size-- ){
         *(volatile uint8_t*)0x1400; //ee read, blocks if busy
         *d++ = *s++;
-        if( (not size) or not ((int)d bitand (EEPROM_PAGE_SIZE-1)) ) { //last byte, or page crossed
+        if( (size == 0) or ! ((int)d & (EEPROM_PAGE_SIZE-1)) ) { //last byte, or page crossed
             _PROTECTED_WRITE_SPM( NVMCTRL.CTRLA, 3 );
             }
     }
@@ -47,14 +47,14 @@ void eememcpy3(void* src, void* eemem, uint8_t size){
         *(volatile uint8_t*)0x1400; //ee read, blocks if busy
         asm("cli");
         *d++ = *s++;
-        if( (not size) or not ((int)d bitand (EEPROM_PAGE_SIZE-1)) )  { //last byte, or page crossed
+        if( (size == 0) or ! ((int)d & (EEPROM_PAGE_SIZE-1)) )  { //last byte, or page crossed
             _PROTECTED_WRITE_SPM( NVMCTRL.CTRLA, 3 );
             SREG = sreg;
             }
     }
 }
 
-//using simple version
+//simple version
 #define EEWRITE(eemem,val) \
     { typeof(eemem) v__ = (typeof(eemem))val; eememcpy( &v__, &eemem, sizeof(eemem) ); }
 //version 2
